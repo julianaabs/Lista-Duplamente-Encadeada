@@ -63,8 +63,10 @@ void Lista<object>::InserirFinal(object h){
 		Node<object> *tmp = new Node<object>();
 		tmp->setData(h);
 		tail->setNext(tmp);
+		tmp->setBack(tail);
 		tail = tmp;
 		tail->setNext(NULL);
+		tail->setBack(tmp->getBack());
 		fsize++;
 	}
 }
@@ -84,6 +86,7 @@ void Lista<object>::RemoverInicio(){
 		Node<object> *tmp;
 		tmp = head;
 		head = head->getNext();
+		head->setBack(NULL);
 		delete tmp;
 		fsize--;
 	}
@@ -107,7 +110,9 @@ void Lista<object>::RemoverPosicao(int pos){
 	for(int i=1; i<=fsize; i++){
 		if(i==pos){
 			Node<object> *tmp = cont->getNext();
+			tmp->setBack(cont);
 			cont->setNext(tmp->getNext());
+			cont->setBack(tmp->getBack());
 			delete tmp;
 			fsize--;
 			break;
